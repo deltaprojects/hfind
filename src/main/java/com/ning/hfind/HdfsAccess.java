@@ -4,8 +4,11 @@ import com.ning.hfind.config.HdfsConfig;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hdfs.DistributedFileSystem;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class HdfsAccess
 {
@@ -49,7 +52,14 @@ public class HdfsAccess
 
     private void setFileSystem() throws IOException
     {
-        fs = FileSystem.get(hdfsConfig.getConfiguration());
+      try {
+        DistributedFileSystem distributedFileSystem = new DistributedFileSystem();
+        String uri = hdfsConfig.getConfiguration().get("fs.default.name");
+        distributedFileSystem.initialize(new URI(uri), hdfsConfig.getConfiguration());
+        fs = distributedFileSystem;
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
     }
 
     private FileSystem getFileSystemSafe() throws IOException
