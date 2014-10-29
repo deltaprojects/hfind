@@ -1,8 +1,9 @@
 #/bin/sh -e
 
 # Use HFIND_OPTS to customize for your hadoop installation, e.g.:
-# export HFIND_OPTS="-Dhfind.hadoop.ugi='pierre\,pierre' -Dhfind.hadoop.namenode.url=hdfs://namenode.company.com:9000 -Xms512m -Xmx3072m"
-#
+# HFIND_OPTS="-Dhfind.hadoop.ugi='pierre\,pierre' -Dhfind.hadoop.namenode.url=hdfs://namenode.company.com:9000 -Xms512m -Xmx3072m"
+
+HFIND_OPTS="-Dhfind.hadoop.namenode.url=hdfs://nn-ix01:8020 -Xms512m -Xmx1024m"
 HFIND_JAR=${HFIND_JAR:=$PWD/target/metrics.hfind-*-jar-with-dependencies.jar}
 
 # To build
